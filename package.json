@@ -44,7 +44,8 @@
   "standard": {
     "ignore": [
       "dist/**",
-      "coverage/**"
+      "coverage/**",
+      "reference/**"
     ]
   },
   "dependencies": {
