@@ -1,0 +1,53 @@
+{
+  "name": "dream-pdf",
+  "version": "0.0.0-semantically-released",
+  "description": "A modular library to create PDFs",
+  "main": "pdf.js",
+  "scripts": {
+    "build": "browserify -s DreamPDF pdf.js > dist/dream-pdf.js",
+    "postbuild": "uglifyjs dist/dream-pdf.js -mc > dist/dream-pdf.min.js",
+    "postpublish": "semantic-release post",
+    "prebuild": "rimraf dist && mkdirp dist",
+    "prepublish": "semantic-release pre",
+    "test": "standard && npm run -s test:node | tap-spec",
+    "test:coverage": "istanbul cover tests && istanbul-coveralls",
+    "test:node": "node tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gr2m/dream-pdf.git"
+  },
+  "keywords": [
+    "pdf",
+    "generator",
+    "creator",
+    "browser"
+  ],
+  "author": "Gregor Martynus <gregor@martynus.net>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gr2m/dream-pdf/issues"
+  },
+  "homepage": "https://github.com/gr2m/dream-pdf",
+  "devDependencies": {
+    "browserify": "^10.2.3",
+    "istanbul": "^0.3.14",
+    "istanbul-coveralls": "^1.0.2",
+    "mkdirp": "^0.5.1",
+    "rimraf": "^2.3.4",
+    "semantic-release": "^3.3.1",
+    "standard": "^3.13.0",
+    "tap-spec": "^4.0.0",
+    "tape": "^4.0.0",
+    "uglify-js": "^2.4.23"
+  },
+  "standard": {
+    "ignore": [
+      "dist/**",
+      "coverage/**"
+    ]
+  },
+  "dependencies": {
+    "buffer-equal": "0.0.1"
+  }
+}
