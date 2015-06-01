@@ -35,7 +35,6 @@ function PDF (options) {
     options: setDefault(options),
     currentPage: currentPage,
     pages: [currentPage],
-    doc: {},
     resources: {
       fonts: {}
     },
