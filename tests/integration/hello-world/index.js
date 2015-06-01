@@ -1,4 +1,3 @@
-var bufferEqual = require('buffer-equal')
 var test = require('tape')
 var fs = require('fs')
 
@@ -22,6 +21,7 @@ test('hello world', function (t) {
     var bufferGenerated = new Buffer(content, 'binary')
     var bufferFixture = fs.readFileSync(__dirname + '/fixture.pdf')
 
-    t.equal(bufferEqual(bufferGenerated, bufferFixture), true)
+    // console.log(bufferDiff(bufferGenerated, bufferFixture))
+    t.equal(bufferGenerated.toString('binary').split('\n'), bufferFixture.toString('binary').split('\n'), 'should match fixture')
   })
 })
