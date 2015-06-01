@@ -14,7 +14,7 @@ test('hello world', function (t) {
     createdAt: new Date(Date.UTC(2015, 4, 9))
   })
 
-  pdf.add('Hello, PDF world!')
+  pdf.add('Hello,\nPDF world!')
   pdf.getContent(function (error, content) {
     if (error) throw error
 
@@ -22,6 +22,6 @@ test('hello world', function (t) {
     var bufferFixture = fs.readFileSync(__dirname + '/fixture.pdf')
 
     // console.log(bufferDiff(bufferGenerated, bufferFixture))
-    t.equal(bufferGenerated.toString('binary').split('\n'), bufferFixture.toString('binary').split('\n'), 'should match fixture')
+    t.equal(bufferGenerated.toString('binary'), bufferFixture.toString('binary'), 'should match fixture')
   })
 })
