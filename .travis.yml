@@ -1,0 +1,44 @@
+language: node_js
+node_js:
+- '0.12'
+sudo: false
+cache:
+  directories:
+  - node_modules
+notifications:
+  email: false
+before_install:
+- nvm install $NODE
+- nvm use $NODE
+- npm i -g npm@^2.0.0
+before_script:
+- npm prune
+- curl -Lo travis_after_all.py https://raw.github.com/dmakhno/travis_after_all/master/travis_after_all.py
+script: npm run $COMMAND
+after_success:
+- python travis_after_all.py
+- export $(cat .to_export_back)
+after_failure:
+- python travis_after_all.py
+- export $(cat .to_export_back)
+before_deploy:
+- rm -f travis_after_all.py .to_export_back
+- npm run docs
+after_script:
+- echo leader=$BUILD_LEADER status=$BUILD_AGGREGATE_STATUS
+env:
+  matrix:
+  - NODE=0.10 COMMAND=test:coverage
+  - NODE=0.10 COMMAND=test
+  - NODE=0.12 COMMAND=test
+  - NODE=iojs-v1 COMMAND=test
+deploy:
+  provider: npm
+  email: gregor@martynus.net
+  skip_cleanup: true
+  on:
+    branch: master
+    repo: gr2m/dream-pdf
+    condition: $BUILD_LEADER$BUILD_AGGREGATE_STATUS = YESothers_succeeded
+  api_key:
+    secure: d9P1JKFljTj/S/rAUQPuE8goNNcBKsm6y/7dNfHSToFv5/QEy0lWU71Dk8IAt2q6BU4b6SeBSnJPa0e1sIQ5syCQre/Q66nCtY1BwXul3ioPaECWH18jdUD43Pubv3LqxB3N+cQYP36e4lPiKMyFA4Q4N7OejnlO/5atwT3crZ9a6nLq1oo9T6mBZTgiylle5f8Yko5pMPw3hPBR7is8hwZMCIsybJtggtIunvroabjv+R3azjW0pTv4Nr/+yE71yB2/1sQ+ncyLjrE1ds6FzJxQdVjK1PAukJYsWyMJoqTpWea+3WIjUyy1tkCN+y7XvC/kHmhudYF3bRNfOEe+S35jio9eeYfKrkByax5H2py0sydYE5LN+GB6dVRApPaOtp+7x8K32ua7wVEzLpl4s+pRBFvSnCuHgTLLrQG2MbE1ddSyxAZrZ8LtF87BgmiVmNRnDRqs3n2WRi2ZKktgIX40QgtSKy1oVCSmTWn/x/p3FphNqHy/KIK+P8clVNKWUwexwcZETevcj2QAGJ8zb0LNyxNm8KulXLtR5r3K6hKUFsa+rGaWhHXaOTvLyopZeuS3Jum24lKgwwkcY2bWPedmBBrxYWfnyG7AOilPG4O9tqgxw5NCaK1noezdz1mg2zNcSEdzzXVqlRRDrd8S4NwH4pGmzQ5RVygUveDY+6Y=
