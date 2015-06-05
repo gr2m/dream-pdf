@@ -14,37 +14,30 @@ PDF.plugin = require('./lib/plugin').bind(null, PDF.plugins)
  * doc = new PDF(options)
  **/
 function PDF (options) {
-  var internals = {
-    uniqueNr: 0
-  }
-
-  var infoId = uniqueNr({internals: internals})
-  var catalogId = uniqueNr({internals: internals})
-  var pageTreeId = uniqueNr({internals: internals})
-  var resourcesId = uniqueNr({internals: internals})
-  var firstPageId = uniqueNr({internals: internals})
-
-  var currentPage = {
-    id: firstPageId,
-    contents: []
-  }
   var state = {
     version: PDF.version,
-    ids: {
-      info: infoId,
-      catalog: catalogId,
-      pageTree: pageTreeId,
-      resources: resourcesId
-    },
+    ids: {},
     options: setDefault(options),
-    currentPage: currentPage,
-    pages: [currentPage],
     resources: {
       fonts: {}
     },
-    internals: internals,
+    internals: {
+      uniqueNr: 0
+    },
     plugins: PDF.plugins
   }
+
+  state.ids.info = uniqueNr(state)
+  state.ids.catalog = uniqueNr(state)
+  state.ids.pageTree = uniqueNr(state)
+  state.ids.resources = uniqueNr(state)
+  state.ids.firstPage = uniqueNr(state)
+
+  state.currentPage = {
+    id: state.ids.firstPage,
+    contents: []
+  }
+  state.pages = [state.currentPage]
 
   var api = {
     add: add.bind(null, state),
