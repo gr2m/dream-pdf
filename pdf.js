@@ -14,11 +14,15 @@ PDF.plugin = require('./lib/plugin').bind(null, PDF.plugins)
  * doc = new PDF(options)
  **/
 function PDF (options) {
-  var infoId = uniqueNr()
-  var catalogId = uniqueNr()
-  var pageTreeId = uniqueNr()
-  var resourcesId = uniqueNr()
-  var firstPageId = uniqueNr()
+  var internals = {
+    uniqueNr: 0
+  }
+
+  var infoId = uniqueNr({internals: internals})
+  var catalogId = uniqueNr({internals: internals})
+  var pageTreeId = uniqueNr({internals: internals})
+  var resourcesId = uniqueNr({internals: internals})
+  var firstPageId = uniqueNr({internals: internals})
 
   var currentPage = {
     id: firstPageId,
@@ -38,6 +42,7 @@ function PDF (options) {
     resources: {
       fonts: {}
     },
+    internals: internals,
     plugins: PDF.plugins
   }
 
