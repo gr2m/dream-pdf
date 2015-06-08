@@ -21,8 +21,9 @@ test('textBox plugin', function (t) {
   pdf.getContent(function (error, content) {
     if (error) throw error
 
+    var fixturePath = __dirname + '/fixture.pdf'
     var bufferGenerated = new Buffer(content, 'binary')
-    var bufferFixture = fs.readFileSync(__dirname + '/fixture.pdf')
+    var bufferFixture = fs.readFileSync(fixturePath)
 
     t.equal(bufferGenerated.toString('binary'), bufferFixture.toString('binary'), 'should match fixture')
   })
