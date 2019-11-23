@@ -69,6 +69,11 @@ pdf.add({
 })
 ```
 
+## Resources
+
+- Official specifications: https://www.adobe.com/devnet/pdf/pdf_reference_archive.html
+- Twitter thread with great slide decks and cheat sheets: https://mobile.twitter.com/angealbertini/status/1194219247112785920
+
 ## License
 
 MIT
